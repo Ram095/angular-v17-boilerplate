@@ -1,0 +1,12 @@
+<legend>Page One - AG GRID Component</legend>
+<hr><br>
+<ag-grid-angular
+class="ag-theme-quartz"
+ style="height: 250px;width:100%"
+ (gridReady)="onGridReady($event)"
+ [rowData]="apiResponse"
+ [columnDefs]="colDefs">
+</ag-grid-angular>
+<div class="btn-container mt-4">
+  <button class="btn btn-primary" (click)="openAddModal()">Add</button>
+</div>
