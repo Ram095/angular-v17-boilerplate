@@ -1,4 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  TemplateRef,
+  ViewChild,
+  WritableSignal,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,6 +16,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import { GridOptions } from 'ag-grid-community';
+import { AdminService } from '../admin.service';
 
 @Component({
   standalone: true,
@@ -52,7 +60,7 @@ export interface ICarDetail {
   templateUrl: './page-one.component.html',
   styleUrl: './page-one.component.scss',
 })
-export class PageOneComponent {
+export class PageOneComponent implements OnInit {
   gridApi: any;
   carDetailsForm: FormGroup;
   closeResult = '';
@@ -61,218 +69,9 @@ export class PageOneComponent {
   @ViewChild('confirmDeleteModal', { static: true }) deleteTemplate: any;
   @ViewChild('carDetails', { static: true }) detailTemplate: any;
 
-  apiResponse: ICarDetail[] = [
-    {
-      make: 'Tesla',
-      model: 'Model Y',
-      price: 64950,
-      electric: true,
-      country: 'USA',
-    },
-    {
-      make: 'Ford',
-      model: 'F-Series',
-      price: 33850,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Toyota',
-      model: 'Corolla',
-      price: 29600,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Mercedes',
-      model: 'EQA',
-      price: 48890,
-      electric: true,
-      country: 'USA',
-    },
-    {
-      make: 'BMW',
-      model: '3 Series',
-      price: 40450,
-      electric: false,
-      country: 'Germany',
-    },
-    {
-      make: 'Audi',
-      model: 'Q5',
-      price: 43600,
-      electric: false,
-      country: 'Germany',
-    },
-    {
-      make: 'Nissan',
-      model: 'Leaf',
-      price: 31400,
-      electric: true,
-      country: 'Japan',
-    },
-    {
-      make: 'Chevrolet',
-      model: 'Silverado',
-      price: 28500,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Honda',
-      model: 'Civic',
-      price: 22150,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Hyundai',
-      model: 'Kona',
-      price: 21350,
-      electric: true,
-      country: 'South Korea',
-    },
-    {
-      make: 'Volkswagen',
-      model: 'Passat',
-      price: 26390,
-      electric: false,
-      country: 'Germany',
-    },
-    {
-      make: 'Volvo',
-      model: 'XC90',
-      price: 49500,
-      electric: false,
-      country: 'Sweden',
-    },
-    {
-      make: 'Mazda',
-      model: 'CX-5',
-      price: 27440,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Kia',
-      model: 'Sorento',
-      price: 29090,
-      electric: false,
-      country: 'South Korea',
-    },
-    {
-      make: 'Subaru',
-      model: 'Outback',
-      price: 26745,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Lexus',
-      model: 'RX',
-      price: 45170,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Jeep',
-      model: 'Wrangler',
-      price: 28765,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Land Rover',
-      model: 'Range Rover',
-      price: 92450,
-      electric: false,
-      country: 'UK',
-    },
-    {
-      make: 'Porsche',
-      model: '911',
-      price: 101200,
-      electric: false,
-      country: 'Germany',
-    },
-    {
-      make: 'GMC',
-      model: 'Sierra',
-      price: 30100,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Ram',
-      model: '1500',
-      price: 33200,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Chrysler',
-      model: 'Pacifica',
-      price: 35995,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Buick',
-      model: 'Encore',
-      price: 24500,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Jaguar',
-      model: 'F-Pace',
-      price: 51600,
-      electric: false,
-      country: 'UK',
-    },
-    {
-      make: 'Infiniti',
-      model: 'QX50',
-      price: 38650,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Mitsubishi',
-      model: 'Outlander',
-      price: 26745,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Acura',
-      model: 'MDX',
-      price: 47200,
-      electric: false,
-      country: 'Japan',
-    },
-    {
-      make: 'Lincoln',
-      model: 'Navigator',
-      price: 77090,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Cadillac',
-      model: 'Escalade',
-      price: 79495,
-      electric: false,
-      country: 'USA',
-    },
-    {
-      make: 'Fiat',
-      model: '500X',
-      price: 25895,
-      electric: false,
-      country: 'Italy',
-    },
-  ];
+  apiResponse!: ICarDetail[];
+  //Writable Signal
+  carDetailCount: WritableSignal<number> = signal(0);
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
@@ -290,6 +89,12 @@ export class PageOneComponent {
       sortable: false,
     },
   ];
+
+  gridOptions = <GridOptions>{
+    context: {
+      componentParent: this,
+    },
+  };
 
   public paginationPageSize = 10;
   public paginationPageSizeSelector: number[] | boolean = [10, 25, 50];
@@ -314,7 +119,11 @@ export class PageOneComponent {
     return this.carDetailsForm.controls;
   }
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private adminService: AdminService
+  ) {
     this.carDetailsForm = this.fb.group({
       make: this.fb.control('', Validators.required),
       model: this.fb.control('', [Validators.required]),
@@ -323,12 +132,12 @@ export class PageOneComponent {
       country: this.fb.control('', [Validators.required]),
     });
   }
-
-  gridOptions = <GridOptions>{
-    context: {
-      componentParent: this,
-    },
-  };
+  ngOnInit(): void {
+    this.adminService.getCarDetails().subscribe((res) => {
+      this.apiResponse = res;
+      this.carDetailCount.set(this.apiResponse.length);
+    });
+  }
 
   onGridReady(params: any) {
     this.gridApi = params?.api;
@@ -358,6 +167,7 @@ export class PageOneComponent {
       const newRecord = this.carDetailsForm.value;
       this.apiResponse.push({ ...newRecord });
       this.apiResponse = JSON.parse(JSON.stringify(this.apiResponse));
+      this.carDetailCount.set(this.apiResponse.length);
       this.modalService.dismissAll('saved');
     }
   }
@@ -376,6 +186,7 @@ export class PageOneComponent {
         });
 
         this.apiResponse = [...newResponse];
+        this.carDetailCount.set(this.apiResponse.length);
       },
       (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason({ reason })}`;

@@ -82,7 +82,8 @@
     </div>
   </ng-template>
 </div>
-<div class="btn-container mb-4 text-end">
+<div class="btn-container mb-3 d-flex justify-content-between align-items-center">
+  <span>Total records: {{carDetailCount()}}</span>
   <button class="btn btn-primary" (click)="openAddModal(carDetails)">Add New</button>
 </div>
 <ag-grid-angular

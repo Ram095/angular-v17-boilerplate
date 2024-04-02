@@ -2,6 +2,19 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
 
+With v17, the ng generate command the components, views and pipes created are standalone by default.
+
+The boilerplate project includes the following:
+
+1. Standalone components
+2. Lazy-loading
+3. AG-Grid with CRUD operation
+4. Mockoon
+5. Template driven form
+6. Reactive form
+7. Ng-Bootstrap
+8. Bootstrap icons
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

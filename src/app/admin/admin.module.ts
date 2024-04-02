@@ -10,6 +10,8 @@ import { PageTwoComponent } from './page-two/page-two.component';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridAngular } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminService } from './admin.service';
 
 const routes: Routes = [
   {
@@ -45,6 +47,7 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forChild(routes),
+    HttpClientModule,
     CommonModule,
     NgbHighlight,
     AgGridAngular,
@@ -53,6 +56,6 @@ const routes: Routes = [
     DecimalPipe,
     AsyncPipe,
   ],
-  providers: [DecimalPipe],
+  providers: [AdminService],
 })
 export class AdminModule {}

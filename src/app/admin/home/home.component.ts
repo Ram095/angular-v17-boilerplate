@@ -1,8 +1,8 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, PipeTransform } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, startWith, map } from 'rxjs';
-import data from '../../../assets/data/countries.json';
+import { AdminService } from '../admin.service';
 interface Country {
   name: string;
   flag: string;
@@ -14,20 +14,27 @@ interface Country {
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
-  Countries: Country[] = data;
-
-  countries$: Observable<Country[]>;
+export class HomeComponent implements OnInit {
+  countries!: Country[];
+  countries$!: Observable<Country[]>;
   filter = new FormControl('', { nonNullable: true });
-  constructor(pipe: DecimalPipe) {
-    this.countries$ = this.filter.valueChanges.pipe(
-      startWith(''),
-      map((text) => this.search(text, pipe))
-    );
+  constructor(public pipe: DecimalPipe, public adminService: AdminService) {}
+  ngOnInit(): void {
+    this.getCountryData();
+  }
+
+  getCountryData() {
+    this.adminService.getCountryList().subscribe((res) => {
+      this.countries = res;
+      this.countries$ = this.filter.valueChanges.pipe(
+        startWith(''),
+        map((text) => this.search(text, this.pipe))
+      );
+    });
   }
 
   search(text: string, pipe: PipeTransform): Country[] {
-    return this.Countries.filter((country) => {
+    return this.countries.filter((country) => {
       const term = text.toLowerCase();
       return (
         country.name.toLowerCase().includes(term) ||
