@@ -50,6 +50,9 @@
           }
         }
       }
+      &.fix-bottom {
+        width: 250px;
+      }
     }
   }
 
@@ -147,6 +150,10 @@
           transition: 0.3s;
           max-width: 0px;
           overflow: hidden;
+        }
+        &.fix-bottom {
+          position: fixed;
+          bottom: 0;
         }
       }
     }

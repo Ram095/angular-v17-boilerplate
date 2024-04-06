@@ -9,11 +9,20 @@ The boilerplate project includes the following:
 1. Standalone components
 2. Lazy-loading
 3. AG-Grid with CRUD operation
-4. Mockoon
-5. Template driven form
-6. Reactive form
-7. Ng-Bootstrap
-8. Bootstrap icons
+4. Mockoon for creating mock api's
+5. Eslint
+6. Template driven form
+7. Reactive form
+8. Ng-Bootstrap
+9. Bootstrap icons
+10. Internationalization example using ngx-translate
+
+# Requirements
+
+Node > 18
+npm
+git
+mockoon (https://mockoon.com/)
 
 ## Development server
 

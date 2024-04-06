@@ -13,7 +13,7 @@
         <div class="icon">
                     <i class="bi bi-house"></i>
         </div>
-        <div class="title">Home</div>
+        <div class="title">{{'home' | translate}}</div>
       </div>
     </div>
     <div class="link">
@@ -21,7 +21,7 @@
         <div class="icon">
                     <i class="bi bi-list-ol"></i>
         </div>
-        <div class="title">Page one</div>
+        <div class="title">{{'pageOne' | translate}}</div>
       </div>
     </div>
     <div class="link with-children">
@@ -29,7 +29,7 @@
         <div class="icon">
                     <i class="bi bi-gear"></i>
         </div>
-        <div class="title">Page two</div>
+        <div class="title">{{'pageTwo' | translate}}</div>
       </div>
     </div>
     <div class="link with-children">
@@ -37,7 +37,18 @@
         <div class="icon">
                     <i class="bi bi-gear"></i>
         </div>
-        <div class="title">Page three</div>
+        <div class="title">{{'pageThree' | translate}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="link">
+      <div class="content fix-bottom" >
+        <div class="icon">
+                    <i class="bi bi-translate"></i>
+        </div>
+        <div *ngIf="lang === 'en'" class="title" (click)="changeLanguage('de')">{{'translateDE' | translate}}</div>
+        <div *ngIf="lang === 'de'" class="title" (click)="changeLanguage('en')">{{'translateEN' | translate}}</div>
       </div>
     </div>
   </div>

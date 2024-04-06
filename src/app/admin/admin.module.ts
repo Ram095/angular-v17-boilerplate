@@ -12,6 +12,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminService } from './admin.service';
+import { SharedModule } from '../shared.module';
 
 const routes: Routes = [
   {
@@ -55,6 +56,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     DecimalPipe,
     AsyncPipe,
+    SharedModule,
   ],
   providers: [AdminService],
 })
