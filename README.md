@@ -17,6 +17,26 @@ The boilerplate project includes the following:
 9. Bootstrap icons
 10. Internationalization example using ngx-translate
 
+Some new syntax or features in Angular 17:
+
+1. Similar to JavaScript’s for...of loops, Angular provides the @for block for rendering repeated elements.
+
+@for (user of users; track user.id) {
+{{ user.name }}
+} @empty {
+Empty list of users
+}
+
+// Before
+
+```
+<li *ngFor="let user of users; index as i; first as isFirst">
+  {{i}}/{{users.length}}. {{user}} <span *ngIf="isFirst">default</span>
+</li>
+```
+
+We often see performance problems in apps due to the lack of trackBy function in \*ngFor. A few differences in @for are that track is mandatory to ensure fast diffing performance. The built-in @for loop also has a shortcut for collections with zero items via an optional @empty block.
+
 # Requirements
 
 Node > 18

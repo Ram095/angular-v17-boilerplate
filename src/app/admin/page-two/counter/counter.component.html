@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="text-center">
+    <div class="my-3 mx-2">
+      <app-counter-output></app-counter-output>
+    </div>
+    <div class="my-3 mx-2">
+      <app-counter-button></app-counter-button>
+    </div>
+    <div class="my-3 mx-2 w-50 mx-auto">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Add value to counter" [(ngModel)]="customValue" aria-label="Add value to counter" aria-describedby="button-addon2">
+        <button class="btn btn-outline-info" type="button" id="button-addon2" (click)="addCustomCounter()">Add to counter</button>
+      </div>
+    </div>
+    <div class="my-3 mx-2 w-50 mx-auto">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Enter the Counter Label" [(ngModel)]="customText" aria-label="Change the Counter Text" aria-describedby="button-addon3">
+        <button class="btn btn-outline-info" type="button" id="button-addon3" (click)="changeText()">Change the Counter Label</button>
+      </div>
+    </div>
+  </div>
+</div>
