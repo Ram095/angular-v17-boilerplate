@@ -43,6 +43,7 @@ const routes: Routes = [
     LayoutComponent,
     HomeComponent,
     PageOneComponent,
+    PageThreeComponent,
   ],
   imports: [
     RouterModule.forChild(routes),

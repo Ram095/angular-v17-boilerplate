@@ -1,19 +1,93 @@
 <legend>Page Three Component</legend>
 <hr>
+<ng-template #postDetails let-modal>
+  <form class="form" [formGroup]="postForm" #formDirective="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Post Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+          <label for="Title" class="form-label">Title</label>
+          <div class="input-group">
+            <input  type="text" id="Title" [formControl]="titleControl" class="form-control" placeholder="Title" [ngClass]="{ 'is-invalid': titleControl.invalid && (titleControl.dirty || titleControl.touched )  }"/>
+          </div>
+          @if (titleControl.invalid && (titleControl.dirty || titleControl.touched )) {
+            @if (titleControl.errors?.['required']) {
+              <div class="text-danger mt-1 fs-6" >
+                Title is required.
+              </div>
+            }
+            @if (titleControl.errors?.['minlength']) {
+              <div class="text-danger mt-1 fs-6" >
+                Title should have minimum 6 characters.
+              </div>
+            }
+          }
+        </div>
+        <div>
+          <label for="description" class="form-label">Description</label>
+          <div class="input-group">
+            <input type="text" id="description" [formControl]="descriptionControl" class="form-control" placeholder="Description" [ngClass]="{ 'is-invalid': descriptionControl.invalid && (descriptionControl.dirty || descriptionControl.touched )  }" >
+          </div>
+          @if (descriptionControl.invalid && (descriptionControl.dirty || descriptionControl.touched)) {
+            <div class="text-danger mt-1 fs-6" >
+              Description is required.
+            </div>
+          }
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close click')">Cancel</button>
+      <button type="submit" class="btn btn-primary"  *ngIf="!toggleUpdate" [disabled]="!postForm.valid" (click)="addDetails()" >Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="toggleUpdate" [disabled]="!postForm.valid" (click)="updateDetails()" >Update</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #confirmDeleteModal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Deletion of Post</h4>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+      <p>
+          <strong>Are you sure you want to delete <span class="text-primary">{{selectedPost?.title}}</span> ?</strong>
+      </p>
+      <p>
+          <span class="text-dager">This operation can not be undone.</span>
+      </p>
+      <div class="modal-footer">
+          <button class="btn-outliner-secondary btn" (click)="modal.dismiss('Close button clicked')">Cancel</button>
+          <button class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+      </div>
+  </div>
+</ng-template>
+<button class="btn btn-primary mb-3" (click)="openAddModal(postDetails)">Add New</button>
 <table class="table table-striped table-hover table-bordered">
   <thead>
     <tr>
       <th>ID</th>
       <th>Title</th>
       <th>Description</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    @for (post of posts$ | async; track post.id ) {
+    @for (post of posts$ | async; track post.id; let i = $index ) {
       <tr>
         <td>{{post.id}}</td>
         <td>{{post.title}}</td>
         <td>{{post.description}}</td>
+        <td>
+          <div class="d-flex">
+            <div (click)="updatePost(post?.id, postDetails)" class="me-4 pe-cursor icon">
+              <i class="bi bi-pencil"></i>
+            </div>
+            <div (click)="DeletePost(post, confirmDeleteModal)" class="icon pe-cursor ">
+              <i class="bi bi-trash"></i>
+            </div>
+          </div>
+        </td>
       </tr>
     } @empty {
       <tr>

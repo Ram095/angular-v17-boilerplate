@@ -143,22 +143,12 @@ export class PageOneComponent implements OnInit {
     this.gridApi = params?.api;
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'Reason was escape press';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'Backdrop was clicked';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
   openAddModal(content: TemplateRef<any>) {
     this.toggleEditButton = false;
     this.carDetailsForm.reset();
     const modalRef = this.modalService.open(content);
     modalRef.result.then((reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      `Dismissed ${this.adminService.getDismissReason(reason)}`;
     });
   }
 
@@ -177,7 +167,9 @@ export class PageOneComponent implements OnInit {
     this.selectedRecord = param;
     this.modalService.open(this.deleteTemplate).result.then(
       (result) => {
-        this.closeResult = `Closed with: ${this.getDismissReason({ result })}`;
+        this.closeResult = `Closed with: ${this.adminService.getDismissReason({
+          result,
+        })}`;
 
         this.apiResponse.forEach((rec: ICarDetail) => {
           if (rec.make !== this.selectedRecord.make) {
@@ -189,7 +181,9 @@ export class PageOneComponent implements OnInit {
         this.carDetailCount.set(this.apiResponse.length);
       },
       (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason({ reason })}`;
+        this.closeResult = `Dismissed ${this.adminService.getDismissReason({
+          reason,
+        })}`;
       }
     );
   }
@@ -199,7 +193,9 @@ export class PageOneComponent implements OnInit {
     this.carDetailsForm.patchValue(this.selectedRecord);
     this.toggleEditButton = true;
     this.modalService.open(this.detailTemplate).result.then((reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason({ reason })}`;
+      this.closeResult = `Dismissed ${this.adminService.getDismissReason({
+        reason,
+      })}`;
     });
   }
 
