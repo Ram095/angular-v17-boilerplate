@@ -7,9 +7,9 @@ import {
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { Post } from '../../models/post.model';
-import { AppState } from '../../store/app.state';
+import { Post, PostState } from '../../models/post.model';
 import { AdminService } from '../admin.service';
 import { addPost, deletePost, updatePost } from './state/list.action';
 import { getPosts, getPostsById } from './state/list.selector';
@@ -25,10 +25,11 @@ export class PageThreeComponent implements OnInit {
   toggleUpdate: boolean = false;
   selectedPost!: Post | null;
   constructor(
-    private store: Store<AppState>,
+    private store: Store<PostState>,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit() {
@@ -54,9 +55,16 @@ export class PageThreeComponent implements OnInit {
   openAddModal(content: TemplateRef<any>) {
     this.postForm.reset();
     const modalRef = this.modalService.open(content);
-    modalRef.result.then((reason) => {
-      `Dismissed ${this.adminService.getDismissReason(reason)}`;
-    });
+    modalRef.result.then(
+      (result) => {
+        this.toastrService.success('Details added successfully', 'Success', {
+          timeOut: 3000,
+        });
+      },
+      (reason) => {
+        `Dismissed ${this.adminService.getDismissReason(reason)}`;
+      }
+    );
   }
 
   addDetails() {
@@ -68,6 +76,9 @@ export class PageThreeComponent implements OnInit {
       description: this.postForm.value.description,
     };
     this.store.dispatch(addPost({ post }));
+    this.toastrService.success('Details added successfully', 'Success', {
+      timeOut: 3000,
+    });
     this.modalService.dismissAll();
   }
 
@@ -100,6 +111,9 @@ export class PageThreeComponent implements OnInit {
       description: this.postForm.value.description,
     };
     this.store.dispatch(updatePost({ post }));
+    this.toastrService.success('Details updated successfully', 'Success', {
+      timeOut: 3000,
+    });
     this.modalService.dismissAll();
   }
 
@@ -109,6 +123,9 @@ export class PageThreeComponent implements OnInit {
     modalRef.result.then((result) => {
       if (post.id) {
         this.store.dispatch(deletePost({ id: post?.id }));
+        this.toastrService.success('Details deleted successfully', 'Success', {
+          timeOut: 3000,
+        });
       }
     });
   }

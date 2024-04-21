@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app.state';
+import { CounterState } from '../../../models/counter.model';
 import { CounterButtonComponent } from '../counter-button/counter-button.component';
 import { CounterOutputComponent } from '../counter-output/counter-output.component';
 import { changeCounterName, customIncrement } from '../state/counter.action';
@@ -16,7 +16,7 @@ import { changeCounterName, customIncrement } from '../state/counter.action';
 export class CounterComponent {
   customValue!: number;
   customText!: string;
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<CounterState>) {}
   addCustomCounter() {
     if (this.customValue) {
       this.store.dispatch(customIncrement({ count: this.customValue }));

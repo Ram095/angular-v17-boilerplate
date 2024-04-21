@@ -1,13 +1,8 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from '../environments/environment';
-import { postsReducer } from './admin/page-three/state/list.reducer';
-import { counterReducer } from './admin/page-two/state/counter.reducer';
-import { appReducer } from './store/app.state';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -15,7 +10,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports: [
-    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -23,13 +19,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
-    StoreModule.forRoot(appReducer),
-    StoreDevtoolsModule.instrument({
-      logOnly: environment.production,
-    }),
   ],
   declarations: [],
   providers: [],
-  exports: [TranslateModule, StoreModule],
+  exports: [TranslateModule, ReactiveFormsModule, FormsModule],
 })
 export class SharedModule {}

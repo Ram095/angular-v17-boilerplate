@@ -2,47 +2,54 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
 
-With v17, the ng generate command the components, views and pipes created are standalone by default.
+With version 17 of Angular CLI, the `ng generate` command creates standalone components, views, and pipes by default.
 
-The boilerplate project includes the following:
+## Features
 
-1. Standalone components
-2. Lazy-loading
-3. AG-Grid with CRUD operation
-4. Mockoon for creating mock api's
-5. Eslint
-6. Template driven form
-7. Reactive form
-8. Ng-Bootstrap
-9. Bootstrap icons
-10. Internationalization example using ngx-translate
+1. **Standalone Components:** Components generated are standalone by default.
+2. **Lazy Loading:** Utilizes lazy loading for optimized performance.
+3. **AG-Grid with CRUD Operations:** Integration of AG-Grid for efficient data management with CRUD operations.
+4. **Mockoon for Mock APIs:** Utilizes Mockoon for easily creating mock APIs for development and testing.
+5. **Eslint:** Includes ESLint for code quality and style consistency.
+6. **Template Driven Form:** Example of a template-driven form.
+7. **Reactive Form:** Example of a reactive form implementation.
+8. **Ng-Bootstrap:** Integration of Ng-Bootstrap for UI components.
+9. **Bootstrap Icons:** Includes Bootstrap icons for enhanced UI design.
+10. **Internationalization (i18n) Example:** Demonstrates internationalization using ngx-translate.
+11. **NgRx:** Utilizes NgRx for state management.
 
-Some new syntax or features in Angular 17:
+## Requirements
 
-1. Similar to JavaScript’s for...of loops, Angular provides the @for block for rendering repeated elements.
+- Node.js and npm installed.
+- Angular CLI version 17.1.2 installed globally (`npm install -g @angular/cli`).
+- Mockoon installed for mocking APIs (optional for local development).
 
-@for (user of users; track user.id) {
-{{ user.name }}
-} @empty {
-Empty list of users
-}
+## Setup
 
-// Before
+1. Clone this repository.
+2. Install dependencies using `npm install`.
+3. Start Mockoon:
+   - Download and install [Mockoon](https://mockoon.com/#download).
+   - Open Mockoon and create the API's with the data's in assets/json folder (/api/countries and /api/car-details).
+   - Start the mock server.
+4. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-```
-<li *ngFor="let user of users; index as i; first as isFirst">
-  {{i}}/{{users.length}}. {{user}} <span *ngIf="isFirst">default</span>
-</li>
-```
+## Troubleshooting
 
-We often see performance problems in apps due to the lack of trackBy function in \*ngFor. A few differences in @for are that track is mandatory to ensure fast diffing performance. The built-in @for loop also has a shortcut for collections with zero items via an optional @empty block.
+### "EMAIL_NOT_FOUND" Error
 
-# Requirements
+If you encounter an "EMAIL_NOT_FOUND" error while signing in, follow these steps:
 
-Node > 18
-npm
-git
-mockoon (https://mockoon.com/)
+1. **Verify Email Address:**
+   Double-check the email address you are using for signing in. Ensure that it is correctly spelled and matches the email address stored in your authentication system.
+
+2. **Check Authentication System Configuration**:
+   Verify that your Firebase project is properly configured, and the authentication method (email/password) is enabled. Make sure that the email address exists in the authentication system.
+
+## Additional Notes
+
+- Make sure to update the environment files with appropriate configurations.
+- Customize and extend components, services, and modules to fit your project requirements.
 
 ## Development server
 

@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from '../../../store/app.state';
+import { CounterState } from '../../../models/counter.model';
 import { getCounter, getCounterName } from '../state/counter.selector';
 
 @Component({
@@ -17,7 +17,7 @@ export class CounterOutputComponent implements OnInit, OnDestroy {
   counterName!: string;
   counterSubscription!: Subscription;
   counter$?: Observable<number>;
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<CounterState>) {}
 
   ngOnInit() {
     this.counter$ = this.store.select(getCounter);

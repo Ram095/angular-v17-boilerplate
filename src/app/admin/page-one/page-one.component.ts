@@ -12,7 +12,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import { GridOptions } from 'ag-grid-community';
@@ -163,7 +163,7 @@ export class PageOneComponent implements OnInit {
   }
 
   onDeleteRecord(param: ICarDetail) {
-    let newResponse: ICarDetail[] = [];
+    const newResponse: ICarDetail[] = [];
     this.selectedRecord = param;
     this.modalService.open(this.deleteTemplate).result.then(
       (result) => {
@@ -202,7 +202,7 @@ export class PageOneComponent implements OnInit {
   editCarDetails() {
     if (this.carDetailsForm.valid) {
       const updatedValue = this.carDetailsForm.value;
-      let existingRecordIndex = this.apiResponse.findIndex(
+      const existingRecordIndex = this.apiResponse.findIndex(
         (item: ICarDetail) =>
           item.make === this.selectedRecord.make &&
           item.model === this.selectedRecord.model

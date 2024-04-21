@@ -1,22 +1,23 @@
 
 <main class="form-signin">
-  <form #loginForm="ngForm">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" >
+    <h1 class="h3 mb-3 fw-normal">Please Login</h1>
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" required placeholder="name@example.com" [(ngModel)]="loginFormModel.email" name="email">
+      <input type="email" class="form-control" id="floatingInput" [formControl]="emailFormControl" placeholder="name@example.com" name="email">
       <label for="floatingInput">Email address</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" required placeholder="Password" [(ngModel)]="loginFormModel.password" name="password">
+      <input type="password" class="form-control" id="floatingPassword" [formControl]="passwordFormControl"  placeholder="Password" name="password">
       <label for="floatingPassword">Password</label>
     </div>
 
-    <div class="form-check text-start my-3">
+    <!-- <div class="form-check text-start my-3">
       <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
       <label class="form-check-label" for="flexCheckDefault">
         Remember me
       </label>
-    </div>
-    <button [disabled]="!loginForm.valid" class="btn btn-primary w-100 py-2" type="submit" (click)="login()">Sign in</button>
+    </div> -->
+    <button [disabled]="!loginForm.valid" class="btn btn-primary w-100 py-2" type="submit">Login</button>
   </form>
+  <button class="btn btn-link" [routerLink]="['/auth/register']" routerLinkActive="router-link-active" >New User? Register</button>
 </main>

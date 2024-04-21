@@ -9,10 +9,11 @@ import { PageThreeComponent } from './page-three/page-three.component';
 import { PageTwoComponent } from './page-two/page-two.component';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridAngular } from 'ag-grid-angular';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AdminService } from './admin.service';
 import { SharedModule } from '../shared.module';
+import { StoreModule } from '@ngrx/store';
+import { postsReducer } from './page-three/state/list.reducer';
+import { counterReducer } from './page-two/state/counter.reducer';
 
 const routes: Routes = [
   {
@@ -46,16 +47,15 @@ const routes: Routes = [
     PageThreeComponent,
   ],
   imports: [
-    RouterModule.forChild(routes),
-    HttpClientModule,
     CommonModule,
     NgbHighlight,
     AgGridAngular,
-    FormsModule,
-    ReactiveFormsModule,
     DecimalPipe,
     AsyncPipe,
     SharedModule,
+    StoreModule.forFeature('counter', counterReducer),
+    StoreModule.forFeature('posts', postsReducer),
+    RouterModule.forChild(routes),
   ],
   providers: [AdminService],
 })

@@ -99,6 +99,10 @@
   }
 
   .content {
+    &.fix-bottom {
+      position: fixed;
+      bottom: 0;
+    }
     .link {
       .children {
         .content {
@@ -150,10 +154,6 @@
           transition: 0.3s;
           max-width: 0px;
           overflow: hidden;
-        }
-        &.fix-bottom {
-          position: fixed;
-          bottom: 0;
         }
       }
     }

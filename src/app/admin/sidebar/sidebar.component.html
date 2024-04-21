@@ -41,14 +41,22 @@
       </div>
     </div>
   </div>
-  <div class="content">
+  <div class="content fix-bottom">
     <div class="link">
-      <div class="content fix-bottom" >
+      <div class="content" >
         <div class="icon">
                     <i class="bi bi-translate"></i>
         </div>
         <div *ngIf="lang === 'en'" class="title" (click)="changeLanguage('de')">{{'translateDE' | translate}}</div>
         <div *ngIf="lang === 'de'" class="title" (click)="changeLanguage('en')">{{'translateEN' | translate}}</div>
+      </div>
+    </div>
+    <div class="link">
+      <div class="content" >
+        <div class="icon">
+                    <i class="bi bi-logout"></i>
+        </div>
+        <div class="title" (click)="logout()">Log out</div>
       </div>
     </div>
   </div>
