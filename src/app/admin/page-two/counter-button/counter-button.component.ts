@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CounterState } from '../../../models/counter.model';
 import { decrement, increment, reset } from '../state/counter.action';

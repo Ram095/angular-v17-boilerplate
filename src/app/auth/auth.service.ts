@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthResponseData } from '../models/authResponse.model';
@@ -11,7 +12,7 @@ import { User } from '../models/user.model';
 export class AuthService {
   isLoggedIn: boolean = true;
   timeoutInterval: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   redirectUrl: string | null = null;
   login(email: string, password: string): Observable<AuthResponseData> {
@@ -56,7 +57,12 @@ export class AuthService {
   }
 
   logOut(): void {
-    this.isLoggedIn = false;
+    localStorage.removeItem('user');
+    if (this.timeoutInterval) {
+      clearTimeout(this.timeoutInterval);
+      this.timeoutInterval = null;
+    }
+    this.router.navigate(['auth']);
   }
 
   setUserInLocalStorage(user: User) {
@@ -71,7 +77,7 @@ export class AuthService {
     const timeInterval = expirationDate - todaysDate;
 
     this.timeoutInterval = setTimeout(() => {
-      //logout functionality or get the refresh token
+      this.logOut();
     }, timeInterval);
   }
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
 import { isAuthenticated } from '../../auth/state/auth.selector';
 import { AuthState } from '../../auth/state/auth.state';
 
@@ -18,7 +19,8 @@ export class SidebarComponent implements OnInit {
   isAuthenticated!: Observable<boolean>;
   constructor(
     private translateService: TranslateService,
-    private store: Store<AuthState>
+    private store: Store<AuthState>,
+    private authService: AuthService
   ) {
     translateService.setDefaultLang('en');
     this.lang = translateService.getDefaultLang();
@@ -37,5 +39,7 @@ export class SidebarComponent implements OnInit {
     this.lang = lang;
   }
 
-  logout() {}
+  logout() {
+    this.authService.logOut();
+  }
 }
