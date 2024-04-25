@@ -10,7 +10,7 @@ import { PageTwoComponent } from './page-two/page-two.component';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridAngular } from 'ag-grid-angular';
 import { AdminService } from './admin.service';
-import { SharedModule } from '../shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { postsReducer } from './page-three/state/list.reducer';
 import { counterReducer } from './page-two/state/counter.reducer';
